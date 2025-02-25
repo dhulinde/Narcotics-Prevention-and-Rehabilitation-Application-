@@ -123,47 +123,6 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              // child: Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //   children: [
-              //     IconButton(
-              //       icon: const Icon(Icons.notifications_outlined),
-              //       color: Colors.grey,
-              //       onPressed: () {
-              //         Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //             builder: (context) => const NotificationsScreen(),
-              //           ),
-              //         );
-              //       },
-              //     ),
-              //     IconButton(
-              //       icon: const Icon(Icons.home_outlined),
-              //       color: Colors.grey,
-              //       onPressed: () {
-              //         Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //             builder: (context) => const HomeScreen(),
-              //           ),
-              //         );
-              //       },
-              //     ),
-              //     IconButton(
-              //       icon: const Icon(Icons.group_outlined),
-              //       color: Colors.grey,
-              //       onPressed: () {
-              //         Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //             builder: (context) => const ProfileScreen(),
-              //           ),
-              //         );
-              //       },
-              //     ),
-              //   ],
-              // ),
             ),
           ),
         ],
