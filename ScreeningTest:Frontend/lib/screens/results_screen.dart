@@ -8,29 +8,37 @@ class ResultsScreen extends StatelessWidget {
 
   Map<String, String> _getMessages(String riskLevel) {
     switch (riskLevel) {
+      case "clear":
+        return {
+          "risk": "Your responses indicate no risk of addiction.",
+          "impact":
+          "You have a healthy lifestyle with no substance use, which greatly benefits your physical and mental well-being.",
+          "recommendation":
+          "Continue making positive choices and staying informed about the risks of substance use to maintain your well-being.",
+        };
       case "low":
         return {
           "risk": "Your responses indicate a low risk of addiction.",
           "impact":
-              "While your current substance use appears to be under control, it's important to maintain healthy habits and stay aware of potential risks.",
+          "While your current substance use appears to be under control, it's important to maintain healthy habits and stay aware of potential risks.",
           "recommendation":
-              "Consider periodic self-assessments to ensure continued well-being.",
+          "Consider periodic self-assessments to ensure continued well-being.",
         };
       case "moderate":
         return {
           "risk": "Your responses suggest a moderate risk of addiction.",
           "impact":
-              "This indicates a pattern that may affect your health and well-being over time.",
+          "This indicates a pattern that may affect your health and well-being over time.",
           "recommendation":
-              "It could be helpful to reflect on your substance use and consider seeking professional guidance to prevent further risks.",
+          "It could be helpful to reflect on your substance use and consider seeking professional guidance to prevent further risks.",
         };
       case "high":
         return {
           "risk": "Your responses indicate a high risk of addiction.",
           "impact":
-              "This suggests significant concerns related to substance use.",
+          "This suggests significant concerns related to substance use.",
           "recommendation":
-              "Seeking professional support is highly recommended to address these issues and prevent serious health, social, or legal consequences. Early intervention can be crucial for recovery.",
+          "Seeking professional support is highly recommended to address these issues and prevent serious health, social, or legal consequences. Early intervention can be crucial for recovery.",
         };
       default:
         return {};
@@ -199,8 +207,8 @@ class ResultsScreen extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             ),
-                            padding: const EdgeInsets.symmetric(vertical: 8), // og 16
-                            minimumSize: const Size(120, 0),
+                            padding: const EdgeInsets.symmetric(vertical: 16), // og 16
+                            minimumSize: const Size(double.infinity, 0),
                           ),
                           child: const Icon(
                             Icons.check,

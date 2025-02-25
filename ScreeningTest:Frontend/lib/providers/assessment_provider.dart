@@ -99,7 +99,8 @@ class AssessmentProvider extends ChangeNotifier {
 
   String getRiskLevel() {
     final score = calculateTotalScore();
-    if (score < 30) return "low";
+    if (score == 0) return "clear";
+    if (score < 30 || score > 0) return "low";
     if (score < 70) return "moderate";
     return "high";
   }

@@ -2,19 +2,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:screening_test/screens/question1sub_screen.dart';
+import 'package:screening_test/screens/question2_screen.dart';
 import '../providers/assessment_provider.dart';
 import '../widgets/base_screen.dart';
 import '../widgets/substance_option_tile.dart';
+import 'question2_screen.dart';
 import 'results_screen.dart';
 
-class Question1Screen extends StatefulWidget {
-  const Question1Screen({super.key});
+class Question1SubScreen extends StatefulWidget {
+  const Question1SubScreen({super.key});
 
   @override
-  State<Question1Screen> createState() => _Question1ScreenState();
+  State<Question1SubScreen> createState() => _Question1ScreenState();
 }
 
-class _Question1ScreenState extends State<Question1Screen> {
+class _Question1ScreenState extends State<Question1SubScreen> {
   bool _hasShownSchoolProbe = false;
 
   Future<void> _showSchoolProbeDialog(BuildContext context) async {
@@ -27,17 +29,17 @@ class _Question1ScreenState extends State<Question1Screen> {
           ),
           title: const Text('Additional Question'),
           content: const Text(
-            'Not even used drugs when you were in school?',
+            'So, you didn\'t encounter drugs usage in your school time too?',
             style: TextStyle(fontSize: 16),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
-              child: const Text('No'),
+              child: const Text('No, I didn\'t'),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context, true),
-              child: const Text('Yes'),
+              child: const Text('Yes, I did'),
             ),
           ],
         );
@@ -97,7 +99,7 @@ class _Question1ScreenState extends State<Question1Screen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'In your life, which of the following substances have you ever used (non-medical use only)?',
+                'As you mentioned in your school life, which of the following substances have you ever used (non-medical use only)?',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
