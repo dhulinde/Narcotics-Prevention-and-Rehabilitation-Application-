@@ -46,21 +46,16 @@ class WelcomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center, // Center content
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(height: 40), // Move content slightly higher
-                  // Person illustration
-                  Container(
-                    height: 280, // Slightly reduced height
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Center(
+                  Expanded( // Wrap the image with Expanded
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 0.0),
                       child: Image.asset(
                         'assets/icons/person.png',
                         fit: BoxFit.contain,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10), // Adjusted spacing
+                  const SizedBox(height: 0), // Adjusted spacing
                   const Text(
                     'Test Yourself',
                     style: TextStyle(
@@ -70,7 +65,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 20), // Adjusted spacing
+                  const SizedBox(height: 0), // Adjusted spacing
                   const Text(
                     'Let\'s Take A Moment To Assess Your\nCurrent Level Of Substance Use',
                     style: TextStyle(
