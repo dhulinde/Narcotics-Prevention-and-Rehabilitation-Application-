@@ -81,7 +81,7 @@ class _Question1ScreenState extends State<Question1SubScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const Question1SubScreen(),
+            builder: (context) => const Question2Screen(),
           ),
         );
       }
