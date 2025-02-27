@@ -5,6 +5,8 @@ import 'package:screening_test/screens/question1sub_screen.dart';
 import '../providers/assessment_provider.dart';
 import '../widgets/base_screen.dart';
 import '../widgets/substance_option_tile.dart';
+import 'question1sub_screen.dart';
+import 'question2_screen.dart';
 import 'results_screen.dart';
 
 class Question1Screen extends StatefulWidget {
@@ -79,7 +81,7 @@ class _Question1ScreenState extends State<Question1Screen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const Question1SubScreen(),
+            builder: (context) => const Question2Screen(),
           ),
         );
       }
