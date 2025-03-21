@@ -1,0 +1,18 @@
+# Flutter/Dart specific
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+
+# IDE and OS-specific files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+# Android/iOS specific
+android/.gradle/
+android/local.properties
+ios/Pods/
+macos/Pods/
