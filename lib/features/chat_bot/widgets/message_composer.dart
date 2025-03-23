@@ -2,39 +2,46 @@ import 'package:flutter/material.dart';
 import '../../../config/constants.dart';
 
 class MessageComposer extends StatefulWidget {
-  final TextEditingController controller;
-  final Function(String) onSubmit;
-  final bool isLoading;
+  final TextEditingController
+      controller; // Text editing controller to manage input text
+  final Function(String)
+      onSubmit; // Function to handle the submission of the message
+  final bool isLoading; // Flag to indicate if a loading state is active
 
   const MessageComposer({
     super.key,
     required this.controller,
     required this.onSubmit,
-    this.isLoading = false,
+    this.isLoading = false, // Default is loading state to false
   });
 
   @override
-  State<MessageComposer> createState() => _MessageComposerState();
+  State<MessageComposer> createState() =>
+      _MessageComposerState(); // Create the state for this widget
 }
 
 class _MessageComposerState extends State<MessageComposer> {
-  bool _hasText = false;
+  bool _hasText = false; // Track whether the text field contains any text
 
   @override
   void initState() {
     super.initState();
-    widget.controller.addListener(_onTextChanged);
+    widget.controller.addListener(
+        _onTextChanged); // Listen to text changes in the controller
   }
 
   @override
   void dispose() {
-    widget.controller.removeListener(_onTextChanged);
+    widget.controller
+        .removeListener(_onTextChanged); // Remove the listener when disposed
     super.dispose();
   }
 
   void _onTextChanged() {
-    final hasText = widget.controller.text.isNotEmpty;
+    final hasText = widget
+        .controller.text.isNotEmpty; // Check if the text field is not empty
     if (hasText != _hasText) {
+      // If text availability has changed, update the state
       setState(() {
         _hasText = hasText;
       });
@@ -44,79 +51,108 @@ class _MessageComposerState extends State<MessageComposer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.symmetric(
+          horizontal: 16, vertical: 12), // Padding for the container
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.white, // White background color
         boxShadow: [
+          // Add a subtle shadow effect
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
-            offset: const Offset(0, -5),
+            offset: const Offset(0, -5), // Shadow is below the container
           ),
         ],
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment:
+            CrossAxisAlignment.end, // Align children at the bottom
         children: [
+          // Text field
           Expanded(
             child: TextField(
-              controller: widget.controller,
-              textCapitalization: TextCapitalization.sentences,
-              maxLines: 5,
-              minLines: 1,
-              enabled: !widget.isLoading,
+              controller:
+                  widget.controller, // Controller for the text input field
+              textCapitalization: TextCapitalization
+                  .sentences, // Auto capitalize first letter of sentences
+              maxLines: 5, // Allow multiple lines
+              minLines: 1, // Minimum height of the text field
+              enabled: !widget
+                  .isLoading, // Disable the text field if loading is true
               decoration: InputDecoration(
-                hintText: 'Type a message...',
-                hintStyle: const TextStyle(color: AppColors.mediumGrey),
-                filled: true,
-                fillColor: AppColors.lightGrey,
+                hintText: 'Type a message...', // Placeholder text
+                hintStyle: const TextStyle(
+                    color: AppColors.mediumGrey), // Style for the hint text
+                filled: true, // Allow filling the background with color
+                fillColor:
+                    AppColors.lightGrey, // Background color of the text field
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(24),
-                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(24), // Rounded corners
+                  borderSide: BorderSide.none, // No border line
                 ),
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 16,
-                  vertical: 10,
+                  vertical: 10, // Padding inside the text field
                 ),
               ),
-              textInputAction: TextInputAction.send,
+              textInputAction:
+                  TextInputAction.send, // Set the action button to "Send"
               onSubmitted: (value) {
                 if (value.isNotEmpty && !widget.isLoading) {
-                  widget.onSubmit(value);
+                  // Only submit if there is text and not loading
+                  widget.onSubmit(
+                      value); // Call the onSubmit function with the text value
                 }
               },
             ),
           ),
-          const SizedBox(width: 8),
+
+          const SizedBox(
+              width: 8), // Space between the text field and send button
+
+          // Send button
           Container(
             decoration: BoxDecoration(
-              color: _hasText && !widget.isLoading
+              color: _hasText &&
+                      !widget
+                          .isLoading // Highlight send button when there is text and not loading
                   ? AppColors.chatAccent
-                  : AppColors.lightGrey,
-              shape: BoxShape.circle,
+                  : AppColors
+                      .lightGrey, // Default to light grey if no text or loading
+              shape: BoxShape.circle, // Round shape for the send button
             ),
             child: IconButton(
-              icon: widget.isLoading
+              icon: widget
+                      .isLoading // Show a loading indicator if isLoading is true
                   ? const SizedBox(
                       width: 24,
                       height: 24,
                       child: CircularProgressIndicator(
-                        color: AppColors.mediumGrey,
+                        color: AppColors
+                            .mediumGrey, // Color for the loading indicator
                         strokeWidth: 2,
                       ),
                     )
-                  : const Icon(Icons.send_rounded),
-              color: _hasText && !widget.isLoading
+                  : const Icon(
+                      Icons.send_rounded), // Show the send icon otherwise
+              color: _hasText &&
+                      !widget
+                          .isLoading // White icon color if text is present and not loading
                   ? Colors.white
-                  : AppColors.mediumGrey,
-              onPressed: _hasText && !widget.isLoading
+                  : AppColors
+                      .mediumGrey, // Grey icon color if no text or loading
+              onPressed: _hasText &&
+                      !widget
+                          .isLoading // Enable the button only if there's text and not loading
                   ? () {
-                      final message = widget.controller.text;
+                      final message =
+                          widget.controller.text; // Get the message text
                       if (message.isNotEmpty) {
-                        widget.onSubmit(message);
+                        // If message is not empty
+                        widget.onSubmit(message); // Submit the message
                       }
                     }
-                  : null,
+                  : null, // Disable the button if conditions are not met
             ),
           ),
         ],
