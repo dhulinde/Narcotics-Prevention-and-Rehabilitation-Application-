@@ -198,4 +198,237 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
     }
   }
 
-  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: const Text(
+          AppStrings.recoveryAssistantTitle,
+          style: TextStyle(
+            color: AppColors.chatAccent,
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.chatAccent,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        actions: [
+          // Chat options popup menu
+          PopupMenuButton<String>(
+            icon: const Icon(
+              Icons.more_vert,
+              color: AppColors.chatAccent,
+            ),
+            onSelected: (value) {
+              if (value == 'clear') {
+                _clearChatHistory();
+              } else if (value == 'restore') {
+                _restoreHistory();
+              } else if (value == 'refresh') {
+                _loadChatHistory();
+              }
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(
+                value: 'clear',
+                child: Row(
+                  children: [
+                    Icon(Icons.delete_outline, color: AppColors.textPrimary),
+                    SizedBox(width: 8),
+                    Text('Clear Chat Display'),
+                  ],
+                ),
+              ),
+              PopupMenuItem<String>(
+                value: 'restore',
+                enabled: _isHistoryCleared,
+                child: Row(
+                  children: [
+                    Icon(Icons.restore,
+                        color: _isHistoryCleared
+                            ? AppColors.textPrimary
+                            : AppColors.mediumGrey),
+                    const SizedBox(width: 8),
+                    const Text('Restore History'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem<String>(
+                value: 'refresh',
+                child: Row(
+                  children: [
+                    Icon(Icons.refresh, color: AppColors.textPrimary),
+                    SizedBox(width: 8),
+                    Text('Refresh from Server'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          // Chat header with description
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            decoration: BoxDecoration(
+              color: AppColors.chatAccent.withOpacity(0.1),
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+            ),
+            child: const Text(
+              "I'm your recovery assistant, here to support you through challenges and celebrate your progress. How can I help you today?",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+                color: AppColors.textPrimary,
+                height: 1.5,
+              ),
+            ),
+          ),
+
+          // History status banner when cleared
+          if (_isHistoryCleared)
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              color: Colors.amber.withOpacity(0.2),
+              child: Row(
+                children: [
+                  Icon(Icons.info_outline, size: 18, color: Colors.amber[800]),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Chat display is temporarily cleared. Your history is still saved.',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.amber[800],
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: _restoreHistory,
+                    child: const Text(
+                      'RESTORE',
+                      style: TextStyle(
+                        color: AppColors.chatAccent,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+          // Chat messages
+          Expanded(
+            child: !_initialLoadComplete
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.chatAccent,
+                    ),
+                  )
+                : ListView.builder(
+                    controller: _scrollController,
+                    padding: const EdgeInsets.all(16),
+                    itemCount: _messages.length,
+                    itemBuilder: (context, index) {
+                      return ChatMessageWidget(message: _messages[index]);
+                    },
+                  ),
+          ),
+
+          // Loading indicator when bot is "typing"
+          if (_isLoading && _initialLoadComplete)
+            Padding(
+              padding: const EdgeInsets.only(left: 24, bottom: 8),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: AppColors.chatAccent.withOpacity(0.3),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  const Text(
+                    'Typing...',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+          // Suggested messages list
+          if (_initialLoadComplete &&
+              _messages.isNotEmpty &&
+              _messages.length < 3)
+            Container(
+              height: 50,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  "How can I manage cravings?",
+                  "What helps with anxiety?",
+                  "Tips for better sleep?",
+                  "How to handle triggers?",
+                  "Motivation strategies?"
+                ].map((message) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: InkWell(
+                      onTap: () => _handleSubmitted(message),
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: AppColors.lightGrey,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: AppColors.mediumGrey.withOpacity(0.3),
+                          ),
+                        ),
+                        child: Text(
+                          message,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+
+          // Message composer
+          MessageComposer(
+            controller: _messageController,
+            onSubmit: _handleSubmitted,
+            isLoading: _isLoading,
+          ),
+        ],
+      ),
+    );
+  }
+}
