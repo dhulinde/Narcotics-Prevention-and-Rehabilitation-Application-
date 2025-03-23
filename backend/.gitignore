@@ -1,0 +1,52 @@
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+
+# Ignore virtual environment
+venv/
+.env/
+
+# Ignore IDE/editor specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore log files
+*.log
+
+# Ignore Django migrations
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# Ignore environment variables
+.env
+*.env
+
+# Ignore compiled files
+*.so
+*.DS_Store
+
+# Ignore database files
+db.sqlite3
+*.db
+
+# Ignore media and static files (if applicable)
+media/
+staticfiles/
+
+# Ignore deployment files
+*.pid
+*.lock
+
+# Ignore Python packaging files
+dist/
+build/
+*.egg-info/
+
+# Ignore secret keys and credentials
+secrets.json
+config.json
