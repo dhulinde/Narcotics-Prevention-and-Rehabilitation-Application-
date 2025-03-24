@@ -1,0 +1,35 @@
+name: nara
+description: A mobile application for addiction recovery support.
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+  flutter: '>=3.16.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State management and utilities
+  shared_preferences: ^2.2.2
+  intl: ^0.19.0
+  http: ^1.1.0
+  sqflite: ^2.3.0
+  path: ^1.8.3
+  url_launcher: ^6.1.14
+
+  # UI Components
+  cupertino_icons: ^1.0.6
+
+  # Chart and data processing
+  fl_chart: ^0.66.2
+  csv: ^5.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+
+flutter:
+  uses-material-design: true
+
